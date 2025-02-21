@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Movie Picker</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+      button {
+        margin-top: 10px;
+        padding: 10px;
+        cursor: pointer;
+      }
+      input {
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Random Movie Picker</h1>
+    <input type="text" id="movieInput" placeholder="Masukkan judul film" />
+    <button onclick="addMovie()">Tambah Film</button>
+    <button onclick="getRandomMovie()">Pilih Film Acak</button>
+    <p id="selectedMovie"></p>
+
+    <script>
+      let movies = JSON.parse(localStorage.getItem("movies")) || ["Inception", "Interstellar", "The Dark Knight", "Pulp Fiction", "Forrest Gump", "The Matrix", "The Shawshank Redemption", "Fight Club", "The Godfather", "Titanic"];
+
+      function addMovie() {
+        const movieInput = document.getElementById("movieInput");
+        const movie = movieInput.value.trim();
+        if (movie) {
+          movies.push(movie);
+          localStorage.setItem("movies", JSON.stringify(movies));
+          movieInput.value = "";
+          alert("Film ditambahkan!");
+        }
+      }
+
+      function getRandomMovie() {
+        if (movies.length === 0) {
+          document.getElementById("selectedMovie").innerText = "Tidak ada film tersedia.";
+          return;
+        }
+        const randomIndex = Math.floor(Math.random() * movies.length);
+        document.getElementById("selectedMovie").innerText = "Film yang dipilih: " + movies[randomIndex];
+      }
+    </script>
+  </body>
+</html>
